@@ -92,6 +92,14 @@ nextBtn.onclick = () => {
   activate(fields[nextIndex]);
 };
 
+const repeatBtn = document.getElementById("repeatBtn");
+repeatBtn.onclick = () => {
+  if (currentActiveInput) {
+    const label = currentActiveInput.closest(".form-group").querySelector("label").textContent;
+    speak("Pakilagay ang " + label);
+  }
+};
+
 offBtn.onclick = () => {
   assistantEnabled = false;
   assistantOverlay.classList.add("hidden");

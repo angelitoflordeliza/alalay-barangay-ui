@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
+  font-family: 'Inter', sans-serif;
+  background: #f0f2f5;
   margin: 0;
-  font-size: 18px;
+  font-size: 20px; /* Larger base size for accessibility */
+  color: #1f2937;
+  line-height: 1.6;
 }
 
 .hidden {
@@ -11,69 +15,126 @@ body {
 }
 
 .header {
-  background: #0f4c81;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
   color: white;
-  padding: 1rem;
+  padding: 1.5rem;
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.logo { width: 80px; }
-.logo.small { width: 50px; }
+.logo { width: 90px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+.logo.small { width: 60px; }
+
+h1 { margin: 0; font-weight: 700; letter-spacing: -0.025em; }
+h2 { color: #1e3a8a; margin-bottom: 1.5rem; }
 
 .page {
   display: none;
   padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .page.active {
   display: block;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .form-grid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .form-card {
-  font-size: 1.3rem;
-  padding: 2rem;
-  border-radius: 16px;
-  border: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 2.5rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.5);
   background: white;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  color: #1e3a8a;
+  text-align: left;
+}
+
+.form-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  background: #eff6ff;
+  border-color: #bfdbfe;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
 }
 
+label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
 input {
-  font-size: 1.2rem;
-  padding: 0.8rem;
-  border-radius: 10px;
-  border: 1px solid #aaa;
+  font-size: 1.4rem;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 .submit-btn, .back-btn, button {
-  font-size: 1.2rem;
-  padding: 0.8rem 1.4rem;
-  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 16px;
   border: none;
-  background: #0f4c81;
+  background: #2563eb;
   color: white;
   cursor: pointer;
+  transition: filter 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn:hover, .back-btn:hover, button:hover {
+  filter: brightness(110%);
+}
+
+.submit-btn {
+  background: #16a34a;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.back-btn {
+  background: #6b7280;
+  margin-top: 2rem;
 }
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,15 +143,55 @@ input {
 
 .modal {
   background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  max-width: 500px;
+  padding: 3rem;
+  border-radius: 32px;
+  max-width: 600px;
   width: 90%;
   text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.overlay-privacy .modal {
+  border-top: 8px solid #2563eb;
+}
+
+.overlay-assistant .modal {
+  border-top: 8px solid #f59e0b;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.4rem;
+  margin: 2rem 0;
+  cursor: pointer;
+}
+
+.checkbox input {
+  width: 24px;
+  height: 24px;
 }
 
 .assistant-controls {
-  margin-top: 1rem;
+  margin-top: 2rem;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.assistant-controls button {
+  flex: 1;
+  min-width: 140px;
+}
+
+#assistantInput {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  background: #fef3c7;
+  border-color: #fcd34d;
+  color: #92400e;
 }

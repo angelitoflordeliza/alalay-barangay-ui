@@ -1,109 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Alalay Barangay</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-<!-- Privacy Gate -->
-<div class="overlay overlay-privacy" id="privacyOverlay">
-  <div class="modal">
-    <img src="logo.png" class="logo" />
-    <h1>Alalay Barangay</h1>
-    <p>
-      This is a prototype system. No data is stored.<br>
-      Ito ay prototype lamang. Walang datos na iniimbak.
-    </p>
+  <!-- Privacy Gate -->
+  <div class="overlay overlay-privacy" id="privacyOverlay">
+    <div class="modal">
+      <img src="logo.png" class="logo" />
+      <h1>Alalay Barangay</h1>
+      <p>
+        This is a prototype system. No data is stored.<br>
+        Ito ay prototype lamang. Walang datos na iniimbak.
+      </p>
 
-    <label class="checkbox">
-      <input type="checkbox" id="agreeCheck">
-      I agree / Sumasang-ayon ako
-    </label>
+      <label class="checkbox">
+        <input type="checkbox" id="agreeCheck">
+        I agree / Sumasang-ayon ako
+      </label>
 
-    <button id="enterBtn" disabled>Enter Website</button>
-  </div>
-</div>
-
-<!-- Main App -->
-<div id="app" class="hidden">
-
-  <header class="header">
-    <img src="logo.png" class="logo small">
-    <h1>Alalay Barangay</h1>
-  </header>
-
-  <!-- Form Selection -->
-  <section class="page active" id="pageSelection">
-    <h2>Select Form / Piliin ang Form</h2>
-
-    <div class="form-grid">
-      <button class="form-card" data-form="senior">Senior Citizen ID</button>
-      <button class="form-card" data-form="clearance">Barangay Clearance</button>
-      <button class="form-card" data-form="residency">Certificate of Residency</button>
-      <button class="form-card" data-form="pension">Social Pension</button>
-    </div>
-  </section>
-
-  <!-- Form Page -->
-  <section class="page" id="pageForm">
-    <h2 id="formTitle"></h2>
-
-    <form id="mainForm" class="form">
-
-      <div class="form-group">
-        <label>Full Name / Buong Pangalan</label>
-        <input required>
-      </div>
-
-      <div class="form-group">
-        <label>Age / Edad</label>
-        <input type="number" required>
-      </div>
-
-      <div class="form-group">
-        <label>Birthday / Kaarawan</label>
-        <input type="date" required>
-      </div>
-
-      <div class="form-group">
-        <label>Address / Tirahan</label>
-        <input required>
-      </div>
-
-      <div class="form-group">
-        <label>Contact Number / Numero ng Telepono</label>
-        <input>
-      </div>
-
-      <div class="form-group">
-        <label>Purpose / Layunin</label>
-        <input required>
-      </div>
-
-      <button type="submit" class="submit-btn">Submit (Prototype)</button>
-    </form>
-
-    <button id="backBtn" class="back-btn">← Back</button>
-  </section>
-</div>
-
-<!-- Assistant -->
-<div class="overlay overlay-assistant hidden" id="assistantOverlay">
-  <div class="modal">
-    <h3>Assistant / Tulong</h3>
-
-    <label id="assistantLabel"></label>
-    <input id="assistantInput">
-
-    <div class="assistant-controls">
-      <button id="nextBtn">Next Empty</button>
-      <button id="offBtn">Turn Off</button>
+      <button id="enterBtn" disabled>Enter Website</button>
     </div>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <!-- Main App -->
+  <div id="app" class="hidden">
+
+    <header class="header">
+      <img src="logo.png" class="logo small">
+      <h1>Alalay Barangay</h1>
+    </header>
+
+    <!-- Form Selection -->
+    <section class="page active" id="pageSelection">
+      <h2>Select Form / Piliin ang Form</h2>
+
+      <div class="form-grid">
+        <button class="form-card" data-form="senior">Senior Citizen ID</button>
+        <button class="form-card" data-form="clearance">Barangay Clearance</button>
+        <button class="form-card" data-form="residency">Certificate of Residency</button>
+        <button class="form-card" data-form="pension">Social Pension</button>
+      </div>
+    </section>
+
+    <!-- Form Page -->
+    <section class="page" id="pageForm">
+      <h2 id="formTitle"></h2>
+
+      <form id="mainForm" class="form">
+
+        <div class="form-group">
+          <label>Full Name / Buong Pangalan</label>
+          <input required>
+        </div>
+
+        <div class="form-group">
+          <label>Age / Edad</label>
+          <input type="number" required>
+        </div>
+
+        <div class="form-group">
+          <label>Birthday / Kaarawan</label>
+          <input type="date" required>
+        </div>
+
+        <div class="form-group">
+          <label>Address / Tirahan</label>
+          <input required>
+        </div>
+
+        <div class="form-group">
+          <label>Contact Number / Numero ng Telepono</label>
+          <input>
+        </div>
+
+        <div class="form-group">
+          <label>Purpose / Layunin</label>
+          <input required>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit (Prototype)</button>
+      </form>
+
+      <button id="backBtn" class="back-btn">← Back</button>
+    </section>
+  </div>
+
+  <!-- Assistant -->
+  <div class="overlay overlay-assistant hidden" id="assistantOverlay">
+    <div class="modal">
+      <h3>Assistant / Tulong</h3>
+
+      <label id="assistantLabel"></label>
+      <input id="assistantInput">
+
+      <div class="assistant-controls">
+        <button id="nextBtn">Next Empty</button>
+        <button id="repeatBtn" style="background: #f59e0b;">Repeat / Ulitin</button>
+        <button id="offBtn" style="background: #ef4444;">Turn Off</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
