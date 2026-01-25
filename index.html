@@ -34,6 +34,10 @@
     <header class="header">
       <img src="logo.png" class="logo small">
       <h1>Alalay Barangay</h1>
+      <div style="margin-left: auto; display: flex; gap: 10px;">
+        <button id="privacyBtn" style="font-size: 0.8rem; padding: 5px 10px;">Privacy</button>
+        <button id="helpBtn" style="font-size: 0.8rem; padding: 5px 10px; background: #f59e0b;">Help / Tulong</button>
+      </div>
     </header>
 
     <!-- Form Selection -->
@@ -45,6 +49,7 @@
         <button class="form-card" data-form="clearance">Barangay Clearance</button>
         <button class="form-card" data-form="residency">Certificate of Residency</button>
         <button class="form-card" data-form="pension">Social Pension</button>
+
       </div>
     </section>
 
@@ -104,6 +109,18 @@
         <button id="repeatBtn" style="background: #f59e0b;">Repeat / Ulitin</button>
         <button id="offBtn" style="background: #ef4444;">Turn Off</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Privacy Policy Modal -->
+  <div class="overlay hidden" id="privacyModal">
+    <div class="modal">
+      <h3>Privacy Policy / Patakaran sa Privacy</h3>
+      <p id="privacyText">
+        This is a prototype system. No data is stored.<br>
+        Ito ay prototype lamang. Walang datos na iniimbak.
+      </p>
+      <button id="closePrivacyBtn" style="background: #ef4444;">Close / Isara</button>
     </div>
   </div>
 
