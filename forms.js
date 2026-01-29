@@ -1,14 +1,16 @@
 const forms = {
     senior: `
     <div id="form-senior" class="specific-form">
-        <div class="form-grid-">
-           
-        </div>
-
         <div class="form-grid-3">
             <div class="form-group">
                 <label>First Name</label>
-                <input type="text" placeholder="Enter First Name" required>
+                <input 
+                    type="text"
+                    placeholder="Enter First Name"
+                    required
+                    data-assistant-label="Please enter your First Name. / Pakilagay ang iyong Pangalan."
+                    data-tts-label="Please enter your First Name. Paki lahguy aang ihh yong Pangalan."
+                >
             </div>
             <div class="form-group">
                 <label>Middle Name</label>
@@ -16,13 +18,25 @@ const forms = {
             </div>
             <div class="form-group">
                 <label>Last Name </label>
-                <input type="text" placeholder="Enter Last Name" required>
+                <input 
+                    type="text"
+                    placeholder="Enter Last Name"
+                    required
+                    data-assistant-label="Please enter your Last Name. / Pakilagay ang iyong Apelyido."
+                    data-tts-label="Please enter your Last Name. Paki lahguy aang ihh yong A pel yih doh."
+                >
             </div>
         </div>
 
         <div class="form-group">
             <label>Address </label>
-            <input type="text" placeholder="Enter Address" required>
+            <input 
+                type="text"
+                placeholder="Enter Address"
+                required
+                data-assistant-label="Please enter your complete address. / Pakilagay ang iyong kumpletong address."
+                data-tts-label="Please enter your complete address. Paki lahguy aang ihh yong kom pleh tong address."
+            >
         </div>
 
         <div class="form-grid-3">
@@ -41,7 +55,8 @@ const forms = {
                 <input 
                     type="tel"
                     inputmode="numeric"
-                    data-tts-label="Paki lahguy aang ihh yong mobile number."
+                    data-assistant-label="Please enter your Mobile Number. / Pakilagay ang iyong Mobile Number."
+                    data-tts-label="Please enter your Mobile Number. Paki lahguy aang ihh yong Mobile Number."
                     placeholder="Ex. +639412345678"
                     maxlength="13"
                     required
@@ -57,29 +72,59 @@ const forms = {
         <div class="form-grid-2">
             <div class="form-group">
                 <label>Birthdate </label>
-                <input type="date" placeholder="mm/dd/yyyy" required>
+                <input 
+                    type="date"
+                    placeholder="mm/dd/yyyy"
+                    required
+                    data-assistant-label="Please enter your birthdate. / Pakilagay ang iyong petsa ng kapanganakan."
+                    data-tts-label="Please enter your birthdate. Paki lahguy aang ihh yong pet sah nang ka panga nakan."
+                >
             </div>
             <div class="form-group">
                 <label>Place of Birth </label>
-                <input type="text" placeholder="Enter Place of Birth" required>
+                <input 
+                    type="text"
+                    placeholder="Enter Place of Birth"
+                    required
+                    data-assistant-label="Please enter your place of birth. / Pakilagay ang iyong lugar ng kapanganakan."
+                    data-tts-label="Please enter your place of birth. Paki lahguy aang ihh yong lugar nang ka panga nakan."
+                >
             </div>
         </div>
 
         <div class="form-grid-4">
             <div class="form-group">
-                <label>Sex </label>
-                <select required><option value="">Choose option</option><option>Male</option><option>Female</option></select>
+                <label>Sex</label>
+                <select 
+                    required
+                    data-assistant-label="Please state your gender. / Pakisabi ang iyong kasarian."
+                    data-tts-label="Please state your gender. Paki lahguy aang ihh yong casa riih an."
+                >
+                    <option value="">Choose option</option>
+                    <option>Male / Lalaki</option>
+                    <option>Female / Babae </option>
+                </select>
             </div>
             <div class="form-group">
-                <label>Civil Status </label>
-                <select required><option value="">Choose option</option><option>Single</option><option>Married</option><option>Widowed</option><option>Separated</option></select>
+                <label>Civil Status</label>
+                <select 
+                    required
+                    data-assistant-label="Please enter your civil status. / Pakilagay ang iyong katayuang sibil."
+                    data-tts-label="Please enter your civil status. Paki lahguy aang ihh yong kah tah yuh aang sibil."
+                >
+                    <option value="">Choose option</option>
+                    <option>Single / Walang Asawa</option>
+                    <option>Married / May Asawa</option>
+                    <option>Widowed / Byudo o Byuda</option>
+                    <option>Separated / Hiwalay</option>
+                </select>
             </div>
             <div class="form-group">
-                <label>Blood Type </label>
+                <label>Blood Type</label>
                 <select required><option value="">Choose option</option><option>A</option><option>B</option><option>AB</option><option>O</option></select>
             </div>
             <div class="form-group">
-                <label>Religion </label>
+                <label>Religion</label>
                 <select required><option value="">Choose option</option><option>Roman Catholic</option><option>Islam</option><option>Iglesia ni Cristo</option><option>Other</option></select>
             </div>
         </div>
