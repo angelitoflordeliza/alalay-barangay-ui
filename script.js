@@ -60,6 +60,23 @@ backBtn.onclick = () => {
   currentFormType = '';
 };
 
+// ---------- Conditional Fields (Dynamic Forms) ----------
+document.addEventListener("change", function (e) {
+  if (e.target && e.target.id === "hasIllness") {
+    const specifyInput = document.getElementById("illnessSpecify");
+    if (!specifyInput) return;
+
+    if (e.target.value === "yes") {
+      specifyInput.disabled = false;
+      specifyInput.required = true;
+    } else {
+      specifyInput.disabled = true;
+      specifyInput.required = false;
+      specifyInput.value = "";
+    }
+  }
+});
+
 // ---------- Assistant ----------
 let idleTimer;
 let assistantEnabled = true;
@@ -174,18 +191,25 @@ function activate(item) {
         // Sync changes back to original select
         assistantSelect.onchange = () => {
           item.value = assistantSelect.value;
+          item.dispatchEvent(new Event("change", { bubbles: true }));
         };
 
-        textToSpeak =  labelText;
+        textToSpeak = item.dataset.ttsLabel || label.textContent;
       }
     }
+
   } else if (item.tagName === "INPUT") {
-    // Regular INPUT element
+    // Regular INPUT element (text, tel, number, etc.)
     const formGroup = item.closest(".form-group");
     if (formGroup) {
       const label = formGroup.querySelector("label");
+
       if (label) {
+        // UI shows the actual label text
         labelText = label.textContent;
+
+        // TTS reads the data-tts-label if present, else fallback to label
+        textToSpeak = item.dataset.ttsLabel || label.textContent;
 
         // Show input box
         assistantInput.classList.remove("hidden");
@@ -194,10 +218,9 @@ function activate(item) {
 
         // Sync changes back to original input
         assistantInput.oninput = () => item.value = assistantInput.value;
-
-        textToSpeak = labelText;
       }
     }
+
   } else if (item.classList && item.classList.contains("form-card")) {
     // Form Selection Button
     labelText = item.textContent;
@@ -212,6 +235,7 @@ function activate(item) {
   assistantLabel.textContent = labelText;
   speak(textToSpeak);
 }
+
 
 nextBtn.onclick = () => {
   const items = getReadableItems();
@@ -397,3 +421,4 @@ function renderSubmittedForms() {
 }
 
 resetIdle();
+

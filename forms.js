@@ -1,5 +1,5 @@
 const forms = {
-  senior: `
+    senior: `
     <div id="form-senior" class="specific-form">
         <div class="form-grid-">
            
@@ -28,11 +28,25 @@ const forms = {
         <div class="form-grid-3">
             <div class="form-group">
                 <label>Telephone</label>
-                <input type="tel" placeholder="Enter Telephone">
+                <input
+                    type="tel"
+                    placeholder="Telephone"
+                    inputmode="numeric"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                >
             </div>
+
             <div class="form-group">
-                <label>Mobile No. </label>
-                <input type="tel" placeholder="Ex. +639412345678" required>
+                <label>Mobile No.</label>
+                <input 
+                    type="tel"
+                    inputmode="numeric"
+                    data-tts-label="Paki lahguy aang ihh yong mobile number."
+                    placeholder="Ex. +639412345678"
+                    maxlength="13"
+                    required
+                    oninput="this.value = this.value.replace(/[^0-9+]/g, '')"
+                >
             </div>
             <div class="form-group">
                 <label>E-mail Address</label>
@@ -118,16 +132,16 @@ const forms = {
         </div>
 
         <div class="form-group">
-            <label>In case of Emergency </label>
+            <label>Emergency Contact</label>
             <input type="text" placeholder="Enter In case of Emergency" required>
         </div>
-         <div class="form-group">
-            <label>Contact </label>
+        <div class="form-group">
+            <label>Contact Number of Emergency Person</label>
             <input type="tel" placeholder="Enter Contact Number" required>
         </div>
     </div>
   `,
-  residency: `
+    residency: `
     <div id="form-residency" class="specific-form">
         <div class="form-group">
             <label>Full Name </label>
@@ -147,7 +161,7 @@ const forms = {
         </div>
     </div>
   `,
-  pension: `
+    pension: `
     <div id="form-pension" class="specific-form">
         <h3>I. Basic Information</h3>
         <div class="form-grid-3">
@@ -242,15 +256,19 @@ const forms = {
         <h3>III. Health Condition</h3>
         <div class="form-group">
             <label>Has existing illness? </label>
-            <select required><option value="">Choose</option><option>Yes</option><option>No</option></select>
+            <select id="hasIllness" required>
+                <option value="">Choose</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
         </div>
         <div class="form-group">
             <label>If yes, please specify</label>
-            <input type="text">
+            <input type="text" id="illnessSpecify" disabled>
         </div>
     </div>
   `,
-  clearance: `
+    clearance: `
     <div id="form-clearance" class="specific-form">
         <div class="form-group">
             <label>Full Name </label>
