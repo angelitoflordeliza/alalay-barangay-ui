@@ -1,3 +1,18 @@
+let speechUnlocked = false;
+
+function unlockSpeech() {
+  if (speechUnlocked) return;
+
+  const utter = new SpeechSynthesisUtterance(" ");
+  speechSynthesis.speak(utter);
+  speechUnlocked = true;
+
+  console.log("Speech unlocked");
+}
+
+["click", "keydown", "touchstart"].forEach(evt => {
+  document.addEventListener(evt, unlockSpeech, { once: true });
+});
 
 // ---------- Privacy Gate ----------
 const agreeCheck = document.getElementById("agreeCheck");
@@ -86,8 +101,13 @@ const assistantOverlay = document.getElementById("assistantOverlay");
 const assistantLabel = document.getElementById("assistantLabel");
 const assistantInput = document.getElementById("assistantInput");
 const assistantSelect = document.getElementById("assistantSelect");
+
 const nextBtn = document.getElementById("nextBtn");
+const repeatBtn = document.getElementById("repeatBtn");
 const offBtn = document.getElementById("offBtn");
+const fillBtn = document.getElementById("fillBtn");
+
+fillBtn.style.display = "none";
 
 function resetIdle() {
   if (!assistantEnabled) return;
@@ -99,7 +119,7 @@ function resetIdle() {
   document.addEventListener(e, resetIdle)
 );
 
-// Help Button (Manual Activation)
+// Help Button
 const helpBtn = document.getElementById("helpBtn");
 if (helpBtn) {
   helpBtn.onclick = () => {
@@ -109,29 +129,28 @@ if (helpBtn) {
 }
 
 function getReadableItems() {
-  // 1. Privacy Gate Page
   if (!privacyOverlay.classList.contains("hidden")) {
-    // Return privacy text first, then checkbox, then button
     const items = [];
     const privacyP = privacyOverlay.querySelector("p");
-    if (privacyP) items.push(privacyP);
+    if (privacyP) {
+  privacyP.dataset.assistantLabel = "Privacy Notice";
+  privacyP.dataset.ttsLabel = privacyP.innerText;
+  items.push(privacyP);
+}
+
     if (agreeCheck && !agreeCheck.checked) items.push(agreeCheck);
     return items;
   }
 
-  // 2. Privacy Policy Modal
   if (!privacyModal.classList.contains("hidden")) {
     return [privacyText];
   }
 
-  // 3. Form Selection
-  if (pageSelection && pageSelection.classList.contains("active")) {
+  if (pageSelection.classList.contains("active")) {
     return [...document.querySelectorAll(".form-card")];
   }
 
-  // 4. Form Filling - get inputs and selects from the CURRENT form
-  if (pageForm && pageForm.classList.contains("active")) {
-    // Get all inputs and selects within formContainer
+  if (pageForm.classList.contains("active")) {
     return [...formContainer.querySelectorAll("input, select")]
       .filter(i => i.required && i.offsetParent !== null && !i.value);
   }
@@ -141,102 +160,113 @@ function getReadableItems() {
 
 function showAssistant() {
   if (!assistantEnabled) return;
-  if (!assistantOverlay.classList.contains("hidden")) return;
 
   const items = getReadableItems();
   if (items.length === 0) return;
+
+  assistantOverlay.classList.remove("hidden");
   activate(items[0]);
 }
+
 
 function activate(item) {
   currentActiveItem = item;
   assistantOverlay.classList.remove("hidden");
 
-  // Reset UI - hide both input and select initially
   assistantInput.classList.add("hidden");
   assistantSelect.classList.add("hidden");
+  fillBtn.style.display = "none";
+
   assistantInput.oninput = null;
   assistantSelect.onchange = null;
 
   let textToSpeak = "";
   let labelText = "";
 
-  // ------------------ INPUT: Checkbox ------------------
+  // CONTEXT-AWARE BUTTON
+  if (!privacyOverlay.classList.contains("hidden")) {
+    nextBtn.textContent = "Agree";
+    nextBtn.onclick = () => {
+      agreeCheck.checked = true;
+      agreeCheck.dispatchEvent(new Event("change"));
+      enterBtn.click();
+      assistantOverlay.classList.add("hidden");
+    };
+  } else {
+    nextBtn.textContent = "Next";
+    nextBtn.onclick = assistantNext;
+  }
+
+  // Checkbox
   if (item.tagName === "INPUT" && item.type === "checkbox") {
-    const formGroup = item.closest(".form-group");
-    const formLabelText = formGroup ? formGroup.querySelector("label")?.textContent.trim() : "";
-    labelText = formLabelText || item.parentElement.textContent.trim();
-    textToSpeak = item.dataset.ttsLabel || labelText;
+    labelText = item.parentElement.textContent.trim();
+    textToSpeak = labelText;
     assistantLabel.textContent = labelText;
 
-    // Auto-click checkbox after speaking
     setTimeout(() => {
       item.checked = true;
       item.dispatchEvent(new Event('change'));
-    }, 3000);
+    }, 2000);
+  }
 
-    // ------------------ SELECT ------------------
-  } else if (item.tagName === "SELECT") {
+  // Select
+  else if (item.tagName === "SELECT") {
     const formGroup = item.closest(".form-group");
-    if (formGroup) {
-      const label = formGroup.querySelector("label");
-      const formLabelText = label ? label.textContent : "";
-      labelText = item.dataset.assistantLabel || formLabelText;
-      textToSpeak = item.dataset.ttsLabel || formLabelText;
+    const label = formGroup?.querySelector("label")?.textContent || "";
+    labelText = item.dataset.assistantLabel || label;
+    textToSpeak = item.dataset.ttsLabel || label;
 
-      // Show select in assistant
-      assistantSelect.classList.remove("hidden");
-      assistantSelect.innerHTML = item.innerHTML; // copy options
-      assistantSelect.value = item.value;
+    assistantSelect.classList.remove("hidden");
+    assistantSelect.innerHTML = item.innerHTML;
+    assistantSelect.value = item.value;
 
-      assistantSelect.onchange = () => {
-        item.value = assistantSelect.value;
-        item.dispatchEvent(new Event("change", { bubbles: true }));
-      };
+    assistantSelect.onchange = () => {
+      item.value = assistantSelect.value;
+      item.dispatchEvent(new Event("change", { bubbles: true }));
+    };
 
-      assistantLabel.textContent = labelText;
-    }
-
-    // ------------------ INPUT: Text, Tel, Number, etc. ------------------
-  } else if (item.tagName === "INPUT") {
-    const formGroup = item.closest(".form-group");
-    if (formGroup) {
-      const label = formGroup.querySelector("label");
-      const formLabelText = label ? label.textContent : "";
-
-      // Assign three labels
-      labelText = item.dataset.assistantLabel || formLabelText;  // shown in assistant
-      textToSpeak = item.dataset.ttsLabel || formLabelText;       // TTS
-      const formLabel = formLabelText;                            // visible on form (already in HTML)
-
-      // Show input in assistant
-      assistantInput.classList.remove("hidden");
-      assistantInput.value = item.value;
-      assistantInput.type = item.type || "text";
-
-      assistantInput.oninput = () => item.value = assistantInput.value;
-
-      assistantLabel.textContent = labelText;
-    }
-
-    // ------------------ FORM CARD BUTTON ------------------
-  } else if (item.classList && item.classList.contains("form-card")) {
-    labelText = item.dataset.assistantLabel || item.textContent;
-    textToSpeak = item.dataset.ttsLabel || item.textContent;
-    assistantLabel.textContent = labelText;
-
-    // ------------------ PARAGRAPH / PRIVACY TEXT ------------------
-  } else if (item.tagName === "P") {
-    labelText = item.dataset.assistantLabel || "Privacy Policy / Patakaran sa Privacy";
-    textToSpeak = item.dataset.ttsLabel || item.innerText;
     assistantLabel.textContent = labelText;
   }
 
-  // Speak the text
-  speak(textToSpeak);
-};
+  // Input
+  else if (item.tagName === "INPUT") {
+    const formGroup = item.closest(".form-group");
+    const label = formGroup?.querySelector("label")?.textContent || "";
+    labelText = item.dataset.assistantLabel || label;
+    textToSpeak = item.dataset.ttsLabel || label;
 
-nextBtn.onclick = () => {
+    assistantInput.classList.remove("hidden");
+    assistantInput.type = item.type || "text";
+    assistantInput.value = item.value;
+
+    assistantInput.oninput = () => item.value = assistantInput.value;
+
+    assistantLabel.textContent = labelText;
+  }
+
+  // Form card (selection screen)
+  else if (item.classList.contains("form-card")) {
+    labelText = item.textContent;
+    textToSpeak = item.textContent;
+    assistantLabel.textContent = labelText;
+
+    fillBtn.style.display = "block";
+    fillBtn.onclick = () => {
+      item.click();
+      assistantOverlay.classList.add("hidden");
+    };
+  } else if (item.tagName === "P") {
+  // Use the ACTUAL paragraph text for both display and speech
+  labelText = item.innerText;
+  textToSpeak = item.innerText;
+  assistantLabel.textContent = labelText;
+}
+
+
+  speak(textToSpeak);
+}
+
+function assistantNext() {
   const items = getReadableItems();
   if (items.length === 0) {
     assistantOverlay.classList.add("hidden");
@@ -246,19 +276,19 @@ nextBtn.onclick = () => {
   let nextIndex = 0;
   if (currentActiveItem) {
     const idx = items.indexOf(currentActiveItem);
-    if (idx !== -1) {
-      nextIndex = (idx + 1) % items.length;
-    }
+    if (idx !== -1) nextIndex = (idx + 1) % items.length;
   }
-  activate(items[nextIndex]);
-};
 
-const repeatBtn = document.getElementById("repeatBtn");
+  activate(items[nextIndex]);
+}
+
 repeatBtn.onclick = () => {
   if (currentActiveItem) {
-    activate(currentActiveItem); // Re-activate to re-speak
+    if (currentActiveItem.tagName === "P") currentActiveItem.dataset.ttsSpoken = "";
+    activate(currentActiveItem);
   }
 };
+
 
 offBtn.onclick = () => {
   assistantEnabled = false;
@@ -267,10 +297,30 @@ offBtn.onclick = () => {
 
 function speak(text) {
   speechSynthesis.cancel();
-  const msg = new SpeechSynthesisUtterance(text);
-  msg.lang = "fil-PH";
-  speechSynthesis.speak(msg);
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-PH";
+
+  // Ensure voices are loaded
+  const voices = speechSynthesis.getVoices();
+  if (voices.length > 0) {
+    utterance.voice = voices.find(v => v.lang === 'en-PH') || voices[0];
+    speechSynthesis.speak(utterance);
+  } else {
+    // Wait until voices are loaded, then speak once
+    const handleVoices = () => {
+      const loadedVoices = speechSynthesis.getVoices();
+      utterance.voice = loadedVoices.find(v => v.lang === 'en-PH') || loadedVoices[0];
+      speechSynthesis.speak(utterance);
+      speechSynthesis.removeEventListener('voiceschanged', handleVoices);
+    };
+    speechSynthesis.addEventListener('voiceschanged', handleVoices);
+  }
 }
+
+
+
+resetIdle();
 
 // ---------- Form Submission ----------
 const successModal = document.getElementById("successModal");
@@ -352,12 +402,16 @@ adminSignInBtn.onclick = () => {
   pageSelection.classList.remove("active");
   pageAdmin.classList.add("active");
   renderSubmittedForms();
+  updateHeaderButtons();
+
 };
 
 // Back from admin panel
 adminBackBtn.onclick = () => {
   pageAdmin.classList.remove("active");
   pageSelection.classList.add("active");
+  updateHeaderButtons();
+
 };
 
 
@@ -419,5 +473,18 @@ function renderSubmittedForms() {
   });
 }
 
+function updateHeaderButtons() {
+  if (pageAdmin.classList.contains("active")) {
+    privacyBtn.style.display = "none";
+    helpBtn.style.display = "none";
+  } else {
+    privacyBtn.style.display = "inline-block";
+    helpBtn.style.display = "inline-block";
+  }
+}
+
+
 resetIdle();
+updateHeaderButtons();
+
 
