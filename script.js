@@ -161,13 +161,13 @@ function activate(item) {
   let textToSpeak = "";
   let labelText = "";
 
-  // Handle different element types
+  // ------------------ INPUT: Checkbox ------------------
   if (item.tagName === "INPUT" && item.type === "checkbox") {
-    // Checkbox (for privacy agreement)
-    labelText = item.parentElement.textContent.trim();
-    assistantInput.classList.add("hidden");
-    assistantSelect.classList.add("hidden");
-    textToSpeak = labelText;
+    const formGroup = item.closest(".form-group");
+    const formLabelText = formGroup ? formGroup.querySelector("label")?.textContent.trim() : "";
+    labelText = formLabelText || item.parentElement.textContent.trim();
+    textToSpeak = item.dataset.ttsLabel || labelText;
+    assistantLabel.textContent = labelText;
 
     // Auto-click checkbox after speaking
     setTimeout(() => {
@@ -175,67 +175,66 @@ function activate(item) {
       item.dispatchEvent(new Event('change'));
     }, 3000);
 
+    // ------------------ SELECT ------------------
   } else if (item.tagName === "SELECT") {
-    // SELECT element - show select dropdown
     const formGroup = item.closest(".form-group");
     if (formGroup) {
       const label = formGroup.querySelector("label");
-      if (label) {
-        labelText = label.textContent;
+      const formLabelText = label ? label.textContent : "";
+      labelText = item.dataset.assistantLabel || formLabelText;
+      textToSpeak = item.dataset.ttsLabel || formLabelText;
 
-        // Show select dropdown and populate it
-        assistantSelect.classList.remove("hidden");
-        assistantSelect.innerHTML = item.innerHTML; // Copy all options
-        assistantSelect.value = item.value;
+      // Show select in assistant
+      assistantSelect.classList.remove("hidden");
+      assistantSelect.innerHTML = item.innerHTML; // copy options
+      assistantSelect.value = item.value;
 
-        // Sync changes back to original select
-        assistantSelect.onchange = () => {
-          item.value = assistantSelect.value;
-          item.dispatchEvent(new Event("change", { bubbles: true }));
-        };
+      assistantSelect.onchange = () => {
+        item.value = assistantSelect.value;
+        item.dispatchEvent(new Event("change", { bubbles: true }));
+      };
 
-        textToSpeak = item.dataset.ttsLabel || label.textContent;
-      }
+      assistantLabel.textContent = labelText;
     }
 
+    // ------------------ INPUT: Text, Tel, Number, etc. ------------------
   } else if (item.tagName === "INPUT") {
-    // Regular INPUT element (text, tel, number, etc.)
     const formGroup = item.closest(".form-group");
     if (formGroup) {
       const label = formGroup.querySelector("label");
+      const formLabelText = label ? label.textContent : "";
 
-      if (label) {
-        // UI shows the actual label text
-        labelText = label.textContent;
+      // Assign three labels
+      labelText = item.dataset.assistantLabel || formLabelText;  // shown in assistant
+      textToSpeak = item.dataset.ttsLabel || formLabelText;       // TTS
+      const formLabel = formLabelText;                            // visible on form (already in HTML)
 
-        // TTS reads the data-tts-label if present, else fallback to label
-        textToSpeak = item.dataset.ttsLabel || label.textContent;
+      // Show input in assistant
+      assistantInput.classList.remove("hidden");
+      assistantInput.value = item.value;
+      assistantInput.type = item.type || "text";
 
-        // Show input box
-        assistantInput.classList.remove("hidden");
-        assistantInput.value = item.value;
-        assistantInput.type = item.type || "text";
+      assistantInput.oninput = () => item.value = assistantInput.value;
 
-        // Sync changes back to original input
-        assistantInput.oninput = () => item.value = assistantInput.value;
-      }
+      assistantLabel.textContent = labelText;
     }
 
+    // ------------------ FORM CARD BUTTON ------------------
   } else if (item.classList && item.classList.contains("form-card")) {
-    // Form Selection Button
-    labelText = item.textContent;
-    textToSpeak = labelText;
+    labelText = item.dataset.assistantLabel || item.textContent;
+    textToSpeak = item.dataset.ttsLabel || item.textContent;
+    assistantLabel.textContent = labelText;
 
+    // ------------------ PARAGRAPH / PRIVACY TEXT ------------------
   } else if (item.tagName === "P") {
-    // Privacy Policy or other paragraph text
-    labelText = "Privacy Policy / Patakaran sa Privacy";
-    textToSpeak = item.innerText;
+    labelText = item.dataset.assistantLabel || "Privacy Policy / Patakaran sa Privacy";
+    textToSpeak = item.dataset.ttsLabel || item.innerText;
+    assistantLabel.textContent = labelText;
   }
 
-  assistantLabel.textContent = labelText;
+  // Speak the text
   speak(textToSpeak);
-}
-
+};
 
 nextBtn.onclick = () => {
   const items = getReadableItems();
@@ -379,9 +378,9 @@ function renderSubmittedForms() {
         </thead>
         <tbody>
           ${dummyForms.map(form => {
-            let statusColor = form.status === 'Completed' ? '#dcfce7' : '#fef3c7';
-            let statusTextColor = form.status === 'Completed' ? '#166534' : '#92400e';
-            return `
+    let statusColor = form.status === 'Completed' ? '#dcfce7' : '#fef3c7';
+    let statusTextColor = form.status === 'Completed' ? '#166534' : '#92400e';
+    return `
             <tr style="border-bottom: 1px solid #e5e7eb;">
               <td style="padding: 1rem;">${form.id}</td>
               <td style="padding: 1rem;">${form.type}</td>
@@ -399,7 +398,7 @@ function renderSubmittedForms() {
               </td>
             </tr>
           `;
-          }).join('')}
+  }).join('')}
         </tbody>
       </table>
     </div>
