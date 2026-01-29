@@ -150,7 +150,7 @@ function activate(item) {
     labelText = item.parentElement.textContent.trim();
     assistantInput.classList.add("hidden");
     assistantSelect.classList.add("hidden");
-    textToSpeak = "Mangyaring i-check para sumang-ayon. " + labelText;
+    textToSpeak = labelText;
 
     // Auto-click checkbox after speaking
     setTimeout(() => {
@@ -176,7 +176,7 @@ function activate(item) {
           item.value = assistantSelect.value;
         };
 
-        textToSpeak = "Pumili para sa " + labelText;
+        textToSpeak =  labelText;
       }
     }
   } else if (item.tagName === "INPUT") {
@@ -195,13 +195,13 @@ function activate(item) {
         // Sync changes back to original input
         assistantInput.oninput = () => item.value = assistantInput.value;
 
-        textToSpeak = "Pakilagay ang " + labelText;
+        textToSpeak = labelText;
       }
     }
   } else if (item.classList && item.classList.contains("form-card")) {
     // Form Selection Button
     labelText = item.textContent;
-    textToSpeak = "Piliin ang " + labelText;
+    textToSpeak = labelText;
 
   } else if (item.tagName === "P") {
     // Privacy Policy or other paragraph text
@@ -281,7 +281,7 @@ const dummyForms = [
     type: "Senior Citizen ID",
     name: "Juan Dela Cruz",
     date: "2026-01-25",
-    status: "Pending"
+    status: "Completed"
   },
   {
     id: 2,
@@ -295,7 +295,7 @@ const dummyForms = [
     type: "Certificate of Residency",
     name: "Pedro Garcia",
     date: "2026-01-26",
-    status: "Pending"
+    status: "Completed"
   },
   {
     id: 4,
@@ -309,7 +309,7 @@ const dummyForms = [
     type: "Senior Citizen ID",
     name: "Carlos Lopez",
     date: "2026-01-27",
-    status: "Pending"
+    status: "Completed"
   }
 ];
 
@@ -337,6 +337,7 @@ adminBackBtn.onclick = () => {
   pageSelection.classList.add("active");
 };
 
+
 // Render submitted forms in admin panel
 function renderSubmittedForms() {
   submittedForms.innerHTML = `
@@ -353,24 +354,28 @@ function renderSubmittedForms() {
           </tr>
         </thead>
         <tbody>
-          ${dummyForms.map(form => `
+          ${dummyForms.map(form => {
+            let statusColor = form.status === 'Completed' ? '#dcfce7' : '#fef3c7';
+            let statusTextColor = form.status === 'Completed' ? '#166534' : '#92400e';
+            return `
             <tr style="border-bottom: 1px solid #e5e7eb;">
               <td style="padding: 1rem;">${form.id}</td>
               <td style="padding: 1rem;">${form.type}</td>
               <td style="padding: 1rem;">${form.name}</td>
               <td style="padding: 1rem;">${form.date}</td>
               <td style="padding: 1rem;">
-                <span style="padding: 0.25rem 0.75rem; border-radius: 12px; background: #fef3c7; color: #92400e; font-size: 0.9rem;">
+                <span style="padding: 0.25rem 0.75rem; border-radius: 12px; background: ${statusColor}; color: ${statusTextColor}; font-size: 0.9rem;">
                   ${form.status}
                 </span>
               </td>
               <td style="padding: 1rem; text-align: center;">
-                <button class="print-btn" data-id="${form.id}" style="background: #16a34a; font-size: 0.9rem; padding: 0.5rem 1rem;">
-                  Print
+                <button class="print-btn" data-id="${form.id}" style="background: ${form.status === 'Completed' ? '#6b7280' : '#16a34a'}; font-size: 0.9rem; padding: 0.5rem 1rem;" ${form.status === 'Completed' ? 'disabled' : ''}>
+                  ${form.status === 'Completed' ? 'Printed' : 'Print'}
                 </button>
               </td>
             </tr>
-          `).join('')}
+          `;
+          }).join('')}
         </tbody>
       </table>
     </div>
@@ -378,11 +383,16 @@ function renderSubmittedForms() {
 
   // Add print button event listeners
   document.querySelectorAll('.print-btn').forEach(btn => {
-    btn.onclick = (e) => {
-      e.target.textContent = "Printed";
-      e.target.style.background = "#6b7280";
-      e.target.disabled = true;
-    };
+    if (btn.textContent !== 'Printed') {
+      btn.onclick = (e) => {
+        const formId = parseInt(e.target.getAttribute('data-id'));
+        const form = dummyForms.find(f => f.id === formId);
+        if (form) {
+          form.status = 'Completed';
+          renderSubmittedForms();
+        }
+      };
+    }
   });
 }
 
