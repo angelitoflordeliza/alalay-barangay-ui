@@ -1,9 +1,10 @@
 const forms = {
     senior: `
     <div id="form-senior" class="specific-form">
+        <h3>I. Basic Information</h3>
         <div class="form-grid-3">
             <div class="form-group">
-                <label>First Name</label>
+                <label>First Name <span style="color:red">*</span></label>
                 <input 
                     type="text"
                     placeholder="Enter First Name"
@@ -17,7 +18,7 @@ const forms = {
                 <input type="text" placeholder="Enter Middle Name">
             </div>
             <div class="form-group">
-                <label>Last Name </label>
+                <label>Last Name <span style="color:red">*</span></label>
                 <input 
                     type="text"
                     placeholder="Enter Last Name"
@@ -29,7 +30,7 @@ const forms = {
         </div>
 
         <div class="form-group">
-            <label>Address </label>
+            <label>Address <span style="color:red">*</span></label>
             <input 
                 type="text"
                 placeholder="Enter Address"
@@ -51,7 +52,7 @@ const forms = {
             </div>
 
             <div class="form-group">
-                <label>Mobile No.</label>
+                <label>Mobile No. <span style="color:red">*</span></label>
                 <input 
                     type="tel"
                     inputmode="numeric"
@@ -71,7 +72,7 @@ const forms = {
 
         <div class="form-grid-2">
             <div class="form-group">
-                <label>Birthdate </label>
+                <label>Birthdate <span style="color:red">*</span></label>
                 <input 
                     type="date"
                     placeholder="mm/dd/yyyy"
@@ -81,7 +82,7 @@ const forms = {
                 >
             </div>
             <div class="form-group">
-                <label>Place of Birth </label>
+                <label>Place of Birth <span style="color:red">*</span></label>
                 <input 
                     type="text"
                     placeholder="Enter Place of Birth"
@@ -94,7 +95,7 @@ const forms = {
 
         <div class="form-grid-4">
             <div class="form-group">
-                <label>Sex</label>
+                <label>Sex <span style="color:red">*</span></label>
                 <select 
                     required
                     data-assistant-label="Please state your gender. / Pakisabi ang iyong kasarian."
@@ -106,7 +107,7 @@ const forms = {
                 </select>
             </div>
             <div class="form-group">
-                <label>Civil Status</label>
+                <label>Civil Status <span style="color:red">*</span></label>
                 <select 
                     required
                     data-assistant-label="Please enter your civil status. / Pakilagay ang iyong katayuang sibil."
@@ -120,18 +121,42 @@ const forms = {
                 </select>
             </div>
             <div class="form-group">
-                <label>Blood Type</label>
-                <select required><option value="">Choose option</option><option>A</option><option>B</option><option>AB</option><option>O</option></select>
+                <label>Blood Type <span style="color:red">*</span></label>
+                <select 
+                    required
+                    data-assistant-label="Please enter your Blood Type. / Pakilagay ang iyong Blood Type."
+                    data-tts-label="Please enter your Blood Type. Paki lahguy aang ihh yong Blood Type."
+                >
+                    <option value="">Choose option</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>AB</option>
+                    <option>O</option>
+                </select>
             </div>
             <div class="form-group">
-                <label>Religion</label>
-                <select required><option value="">Choose option</option><option>Roman Catholic</option><option>Islam</option><option>Iglesia ni Cristo</option><option>Other</option></select>
+                <label>Religion <span style="color:red">*</span></label>
+                <select 
+                    required
+                    data-assistant-label="Please enter your Religion. / Pakilagay ang iyong Relihiyon."
+                    data-tts-label="Please enter your Religion. Paki lahguy aang ihh yong Relih hihh yon."
+                >
+                    <option value="">Choose option</option>
+                    <option>Roman Catholic</option>
+                    <option>Islam</option>
+                    <option>Iglesia ni Cristo</option>
+                    <option>Other</option>
+                </select>
             </div>
         </div>
 
         <div class="form-group">
-            <label>Highest Educational Attainment </label>
-            <select required>
+            <label>Highest Educational Attainment <span style="color:red">*</span></label>
+            <select 
+                required
+                data-assistant-label="Please select your Highest Educational Attainment. / Pakipili ang iyong Pinakamataas na Nakamit na Pang-edukasyon."
+                data-tts-label="Please select your Highest Educational Attainment. Paki pee lee aang ihh yong Pina ka-mata us nah Nah ka mitt nah Pang e do cash on."
+            >
                 <option value="">Choose option</option>
                 <option>Elementary</option>
                 <option>High School</option>
@@ -142,6 +167,7 @@ const forms = {
             </select>
         </div>
 
+        <h3>II. Economic Status</h3>
         <div class="form-grid-2">
             <div class="form-group">
                 <label>GSIS</label>
@@ -163,46 +189,84 @@ const forms = {
 
         <div class="form-grid-3">
             <div class="form-group">
-                <label>Employment Status </label>
-                <select required><option value="">Choose option</option><option>Employed</option><option>Unemployed</option><option>Self-Employed</option></select>
+                <label>Employment Status <span style="color:red">*</span></label>
+                <select 
+                    required
+                    data-assistant-label="Please enter your Employment Status. / Pakilagay ang iyong Katayuan sa Pagtatrabaho."
+                    data-tts-label="Please enter your Employment Status. Paki lahguy aang ihh yong Katayuan sah Pagta trabaho."
+                >
+                    <option value="">Choose option</option>
+                    <option>Employed</option>
+                    <option>Unemployed</option>
+                    <option>Self-Employed</option>
+                </select>
             </div>
             <div class="form-group">
-                <label>Classification </label>
+                <label>Classification <span style="color:red">*</span></label>
                 <select required><option value="">Choose option</option><option>Indigent</option><option>Pensioner</option><option>Supported</option></select>
             </div>
             <div class="form-group">
-                <label>Monthly Pension </label>
+                <label>Monthly Pension <span style="color:red">*</span></label>
                 <select required><option value="">Choose Option</option><option>None</option><option>Below 5,000</option><option>5,000 - 10,000</option><option>Above 10,000</option></select>
             </div>
         </div>
 
+        <h3>III. Emergency Contact</h3>
         <div class="form-group">
-            <label>Emergency Contact</label>
+            <label>Emergency Contact Person <span style="color:red">*</span></label>
             <input type="text" placeholder="Enter In case of Emergency" required>
         </div>
         <div class="form-group">
-            <label>Contact Number of Emergency Person</label>
+            <label>Contact Number of Emergency Person <span style="color:red">*</span></label>
             <input type="tel" placeholder="Enter Contact Number" required>
+        </div>
+        <div>
+            <label>All fields with asterisk (<span style="color:red">*</span>) are required to be answered.</label><br>
+            <label style="font-style: italic;">Ang lahat ng mga patlang na may asterisk (<span style="color:red">*</span>) ay kinakailangang masagot.</label>
+        </div>
+    </div>
+  `,
+    clearance: `
+    <div id="form-clearance" class="specific-form">
+        <div class="form-group">
+            <label>Full Name <span style="color:red">*</span></label>
+            <input type="text" placeholder="Enter Full Name" required>
+        </div>
+        <div class="form-group">
+            <label>Address <span style="color:red">*</span></label>
+            <input type="text" placeholder="Enter Address" required>
+        </div>
+        <div class="form-group">
+            <label>Purpose <span style="color:red">*</span></label>
+            <input type="text" placeholder="Enter Purpose" required>
+        </div>
+        <div>
+            <label>All fields with asterisk (<span style="color:red">*</span>) are required to be answered.</label><br>
+            <label style="font-style: italic;">Ang lahat ng mga patlang na may asterisk (<span style="color:red">*</span>) ay kinakailangang masagot.</label>
         </div>
     </div>
   `,
     residency: `
     <div id="form-residency" class="specific-form">
         <div class="form-group">
-            <label>Full Name </label>
+            <label>Full Name <span style="color:red">*</span></label>
             <input type="text" placeholder="Enter Full Name" required>
         </div>
         <div class="form-group">
-            <label>Address </label>
+            <label>Address <span style="color:red">*</span></label>
             <input type="text" placeholder="Enter Address" required>
         </div>
         <div class="form-group">
-            <label>Years of Residency </label>
+            <label>Years of Residency <span style="color:red">*</span></label>
             <select required>
                 <option value="">--Select--</option>
                 <option value="less">Less than 4 years</option>
                 <option value="more">4 years or more</option>
             </select>
+        </div>
+        <div>
+            <label>All fields with asterisk (<span style="color:red">*</span>) are required to be answered.</label><br>
+            <label style="font-style: italic;">Ang lahat ng mga patlang na may asterisk (<span style="color:red">*</span>) ay kinakailangang masagot.</label>
         </div>
     </div>
   `,
@@ -211,52 +275,52 @@ const forms = {
         <h3>I. Basic Information</h3>
         <div class="form-grid-3">
             <div class="form-group">
-                <label>Last Name </label>
-                <input type="text" required>
-            </div>
-            <div class="form-group">
-                <label>First Name </label>
+                <label>First Name <span style="color:red">*</span></label>
                 <input type="text" required>
             </div>
             <div class="form-group">
                 <label>Middle Name</label>
                 <input type="text">
             </div>
+            <div class="form-group">
+                <label>Last Name <span style="color:red">*</span></label>
+                <input type="text" required>
+            </div>
         </div>
         <div class="form-grid-2">
              <div class="form-group">
-                <label>Citizenship </label>
+                <label>Citizenship <span style="color:red">*</span></label>
                 <input type="text" required>
             </div>
             <div class="form-group">
-                <label>Age </label>
+                <label>Age <span style="color:red">*</span></label>
                 <input type="number" required>
             </div>
         </div>
         <div class="form-group">
-            <label>Address </label>
+            <label>Address <span style="color:red">*</span></label>
             <input type="text" placeholder="House No. Street Barangay City/Municipality Province" required>
         </div>
         <div class="form-grid-3">
             <div class="form-group">
-                <label>Sex </label>
+                <label>Sex <span style="color:red">*</span></label>
                 <select required><option value="">Choose</option><option>Male</option><option>Female</option></select>
             </div>
             <div class="form-group">
-                <label>Civil Status </label>
+                <label>Civil Status <span style="color:red">*</span></label>
                 <select required><option value="">Choose</option><option>Single</option><option>Married</option><option>Widowed</option><option>Separated</option></select>
             </div>
             <div class="form-group">
-                <label>Birthdate </label>
+                <label>Birthdate <span style="color:red">*</span></label>
                 <input type="date" required>
             </div>
         </div>
         <div class="form-group">
-            <label>Birthplace </label>
+            <label>Birthplace <span style="color:red">*</span></label>
             <input type="text" required>
         </div>
         <div class="form-group">
-            <label>Living Arrangement </label>
+            <label>Living Arrangement <span style="color:red">*</span></label>
             <select required>
                 <option value="">Choose</option>
                 <option>Owned</option>
@@ -268,7 +332,7 @@ const forms = {
 
         <h3>II. Economic Status</h3>
         <div class="form-group">
-            <label>Pensioner? </label>
+            <label>Pensioner? <span style="color:red">*</span></label>
             <select required><option value="">Choose</option><option>Yes</option><option>No</option></select>
         </div>
         <div class="form-group">
@@ -286,11 +350,11 @@ const forms = {
             </select>
         </div>
         <div class="form-group">
-            <label>Permanent Source of Income? </label>
+            <label>Permanent Source of Income? <span style="color:red">*</span></label>
             <select required><option value="">Choose</option><option>Yes</option><option>None</option></select>
         </div>
         <div class="form-group">
-            <label>Regular Support from Family? </label>
+            <label>Regular Support from Family? <span style="color:red">*</span></label>
             <select required><option value="">Choose</option><option>Yes</option><option>No</option></select>
         </div>
         <div class="form-group">
@@ -300,7 +364,7 @@ const forms = {
 
         <h3>III. Health Condition</h3>
         <div class="form-group">
-            <label>Has existing illness? </label>
+            <label>Has existing illness? <span style="color:red">*</span></label>
             <select id="hasIllness" required>
                 <option value="">Choose</option>
                 <option value="yes">Yes</option>
@@ -311,21 +375,9 @@ const forms = {
             <label>If yes, please specify</label>
             <input type="text" id="illnessSpecify" disabled>
         </div>
-    </div>
-  `,
-    clearance: `
-    <div id="form-clearance" class="specific-form">
-        <div class="form-group">
-            <label>Full Name </label>
-            <input type="text" placeholder="Enter Full Name" required>
-        </div>
-        <div class="form-group">
-            <label>Address </label>
-            <input type="text" placeholder="Enter Address" required>
-        </div>
-        <div class="form-group">
-            <label>Purpose </label>
-            <input type="text" placeholder="Enter Purpose" required>
+        <div>
+            <label>All fields with asterisk (<span style="color:red">*</span>) are required to be answered.</label><br>
+            <label style="font-style: italic;">Ang lahat ng mga patlang na may asterisk (<span style="color:red">*</span>) ay kinakailangang masagot.</label>
         </div>
     </div>
   `
