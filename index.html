@@ -24,7 +24,7 @@
         I agree / Sumasang-ayon ako
       </label>
 
-      <button id="enterBtn" disabled>Enter Website</button>
+      <button id="enterBtn" disabled>Proceed / Magpatuloy</button>
     </div>
   </div>
 
@@ -35,8 +35,8 @@
       <img src="logo.png" class="logo small">
       <h1>Alalay Barangay</h1>
       <div style="margin-left: auto; display: flex; gap: 10px;">
-        <button id="privacyBtn" style="font-size: 0.8rem; padding: 5px 10px;">Privacy</button>
-        <button id="helpBtn" style="font-size: 0.8rem; padding: 5px 10px; background: #f59e0b;">Help / Tulong</button>
+        <button id="privacyBtn" style="font-size: 1rem; padding: 5px 10px; background: #2a66e6; border: 3px solid #2253be;">Privacy</button>
+        <button id="helpBtn" style="font-size: 1rem; padding: 5px 10px; background: #e7960b; border: 3px solid #b3750a;">Help / Tulong</button>
       </div>
     </header>
 
@@ -53,7 +53,7 @@
 
       <!-- Admin Login Button -->
       <div style="position: fixed; bottom: 2rem; right: 2rem;">
-        <button id="adminLoginBtn" style="background: #6b7280; font-size: 1rem;">Admin Login</button>
+        <button id="adminLoginBtn" style="font-size: 1rem;">Admin Login</button>
       </div>
     </section>
 
@@ -83,7 +83,7 @@
 
   <!-- Admin Login Modal -->
   <div class="overlay hidden" id="adminLoginModal">
-    <div class="modal">
+    <div class="modal" style="border-top: 8px solid #2563eb;">
       <h3>Admin Login</h3>
       <p style="font-size: 1rem; color: #6b7280; margin-bottom: 2rem;">
         (Prototype - Click Sign In to access admin panel)
@@ -93,21 +93,21 @@
         <input type="password" placeholder="Password" style="width: 100%;">
       </div>
       <div style="display: flex; gap: 1rem;">
-        <button id="adminSignInBtn" style="background: #2563eb; flex: 1;">Sign In</button>
-        <button id="closeAdminLoginBtn" style="background: #6b7280; flex: 1;">Cancel</button>
+        <button id="adminSignInBtn" style="flex: 1;">Sign In</button>
+        <button id="closeAdminLoginBtn" style="flex: 1;">Cancel</button>
       </div>
     </div>
   </div>
 
   <!-- Submission Success Modal -->
   <div class="overlay hidden" id="successModal">
-    <div class="modal">
-      <h3>✓ Application Submitted!</h3>
+    <div class="modal" style="border-top: 8px solid #2253be;">
+      <h3 style="color: #1e3a8a;">✓ Application Submitted!</h3>
       <p style="font-size: 1.3rem; margin: 2rem 0;">
         Please go to the Barangay Hall to get the document.<br>
         <strong>Ready for releasing.</strong>
       </p>
-      <button id="closeSuccessBtn" style="background: #16a34a;">Close / Isara</button>
+      <button id="closeSuccessBtn" style="background: #1e3a8a;">Close / Isara</button>
     </div>
   </div>
 
@@ -122,7 +122,7 @@
 
       <div class="assistant-controls">
   <button id="nextBtn">Next</button>
-  <button id="fillBtn" style="background:#16a34a; display:none;">Fill Out</button>
+  <button id="fillBtn" style="background:#16a34a; display:none;">Fill Out / Sagutan</button>
   <button id="repeatBtn" style="background: #f59e0b;">Repeat / Ulitin</button>
   <button id="offBtn" style="background: #ef4444;">Turn Off</button>
 </div>
@@ -132,13 +132,13 @@
 
   <!-- Privacy Policy Modal -->
   <div class="overlay hidden" id="privacyModal">
-    <div class="modal">
+    <div class="modal" style="border-top: 8px solid #2563eb;">
       <h3>Privacy Policy / Patakaran sa Privacy</h3>
       <p id="privacyText">
         This is a prototype system. No data is stored.<br>
         Ito ay prototype lamang. Walang datos na iniimbak.
       </p>
-      <button id="closePrivacyBtn" style="background: #ef4444;">Close / Isara</button>
+      <button id="closePrivacyBtn" style="background: #1e3a8a;">Close / Isara</button>
     </div>
   </div>
 
